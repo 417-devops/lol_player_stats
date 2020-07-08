@@ -19,18 +19,25 @@ def matchIDs(match_history):
     for item in match_history:
         matchID_list.append(item.id)
     return matchID_list
-    
+
 #%% INITIALIZATION
 cass.set_riot_api_key(getAPI_key()) #or replace with your own api key
 cass.set_default_region("NA") #or replace with another region
 
-#% SETTING THE PLAYER TO BE 
+#%% SETTING THE PLAYER TO BE ANALYZED
 player_name= "RebirthNA"
 player_region= "NA"
 summoner = Summoner(name=player_name, region=player_region)
 
-#% GET THE MATCH HISTORY
-# for soloQ only
+#%% GET THE MATCH HISTORY
+# for soloQ
 match_history = summoner.match_history(queues={cass.Queue.ranked_solo_fives})
 matchID_list= matchIDs(match_history) #save this for caching somehow
 
+#%% testing to find right api
+match = match_history[0]
+print('Match ID:', match.id)
+p = match.participants[summoner]
+#p.id is the participant ID of the player in question
+print(p.stats.win)
+print(p.id)
