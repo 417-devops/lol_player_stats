@@ -14,7 +14,7 @@ def getAPI_key():
     file= open("../api_key.txt","r")
     return file.read()
 
-def matchIDs(match_history):
+def make_matchID_list(match_history):
     matchID_list=[]
     for item in match_history:
         matchID_list.append(item.id)
@@ -32,15 +32,32 @@ summoner = Summoner(name=player_name, region=player_region)
 #%% GET THE MATCH HISTORY
 # for soloQ
 match_history = summoner.match_history(queues={cass.Queue.ranked_solo_fives})
-matchID_list= matchIDs(match_history) #save this for caching somehow
+matchID_list= make_matchID_list(match_history) #save this for caching somehow
 
 #%% testing to find right api
 # https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/
 match = match_history[0]
-print('Match ID:', match.id)
+# print('Match ID:', match.id)
 p = match.participants[summoner]
-print(p.stats.gold_earned) # can now get all end of game stats
 
-# getting timeline data ???; see page 43 of docs
-p_state = p.creeps_per_min_deltas
-print(p_state)
+# if you want to save memory, write to file instead of variables. 
+# if you want to do analysis in python, save to variable for ease of use
+
+# End of game stats
+endGame= p.stats
+gold_earned= endGame.gold_earned
+gold_spent= endGame.gold_spent
+total_damage= endGame.total_damage_dealt
+total_damage_champs= endGame.total_damage_dealt_to_champions
+vision_score= endGame.vision_score #maybe some kind of vision score weighted by minute? (should be exponential w/ gametime)
+game_outcome= endGame.win
+print("Won game?", game_outcome)
+print("Gold earned=", gold_earned) # can now get all end of game stats
+
+# Timeline stats; see page 43 of docs
+timeData= p.timeline
+cs_per_min = timeData.creeps_per_min_deltas #got it!
+csd_per_min= timeData.cs_diff_per_min_deltas
+dmgDiff_per_min= timeData.damage_taken_diff_per_min_deltas
+xpDiff_per_min= timeData.xp_diff_per_min_deltas
+print("CS diff/min=", csd_per_min)
