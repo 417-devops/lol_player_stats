@@ -35,9 +35,12 @@ match_history = summoner.match_history(queues={cass.Queue.ranked_solo_fives})
 matchID_list= matchIDs(match_history) #save this for caching somehow
 
 #%% testing to find right api
+# https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/
 match = match_history[0]
 print('Match ID:', match.id)
 p = match.participants[summoner]
-#p.id is the participant ID of the player in question
-print(p.stats.win)
-print(p.id)
+print(p.stats.gold_earned) # can now get all end of game stats
+
+# getting timeline data ???; see page 43 of docs
+p_state = p.creeps_per_min_deltas
+print(p_state)
