@@ -33,7 +33,16 @@ summoner = Summoner(name=player_name, region=player_region)
 # for soloQ
 match_history = summoner.match_history(queues={cass.Queue.ranked_solo_fives})
 matchID_list= make_matchID_list(match_history) #save this for caching somehow
-
+# =============================================================================
+# i=1 
+# while i<len(matchID_list):
+#    if matchID_list[i-1] < matchID_list[i]:
+#        print("newer match id is less than older match id")
+#    else:
+#         pass
+#    i+=1
+# =============================================================================
+   
 #%% testing to find right api
 # https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/
 match = match_history[0]
