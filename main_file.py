@@ -7,6 +7,7 @@ Created on Tue Jul  7 16:19:50 2020
 
 import cassiopeia as cass
 import json
+from pathlib import Path
 from cassiopeia import Summoner, Match
 from cassiopeia.data import Season, Queue
 
@@ -21,6 +22,24 @@ def make_matchID_list(match_history):
         matchID_list.append(item.id)
     return matchID_list
 
+def init_playerData(data_fileName):
+    matchStats= {
+        "matchIDs": [],
+        "gold_earned": [],
+        "gold_spent": [],
+        "total_damage": [],
+        "total_damage_champs": [],
+        "vision_score": [],
+        "Win": [],
+        "cs_per_min": [],
+        "csd_per_min": [],
+        "dmgDiff_per_min": [],
+        "xpDiff_per_min": [],
+            }
+    with open(data_fileName, "w") as outfile: 
+        json.dump(matchStats, outfile)
+        outfile.close()
+        
 #%% INITIALIZATION
 cass.set_riot_api_key(getAPI_key()) #or replace with your own api key
 cass.set_default_region("NA") #or replace with another region
@@ -63,16 +82,18 @@ if len(new_matchIDs) == 0:
 else:
     cache['last-matchID'] = new_last_matchID
 
+#%% CREATING FILE TO SAVE PLAYER'S STATS
+data_fileName= player_name + "_matchStats.json"
 
-# =============================================================================
-# i=1 
-# while i<len(matchID_list):
-#    if matchID_list[i-1] < matchID_list[i]:
-#        print("newer match id is less than older match id")
-#    else:
-#         pass
-#    i+=1
-# =============================================================================
+checkfile=Path("./"+data_fileName)
+if not checkfile.is_file():
+    print("Player stats file does not exist.")
+    print("Creating stats file...")
+    init_playerData(data_fileName)
+
+with open(filename, 'r') as openfile: 
+    json_object = json.load(openfile) 
+print(json_object) 
    
 #%% testing to find right api
 # https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/
@@ -102,6 +123,15 @@ dmgDiff_per_min= timeData.damage_taken_diff_per_min_deltas
 xpDiff_per_min= timeData.xp_diff_per_min_deltas
 print("CS diff/min=", csd_per_min)
 
+#%%
+with open(filename, 'r') as openfile: 
+    json_object = json.load(openfile) 
+  
+print(json_object) 
+x= [9,8,7]
+for item in x:
+    json_object["matchIDs"].insert(0,item)
+print(json_object)
 #%% WRITE TO CACHE
 # Throughout the script we should be writing to the cache dictionary that was created by reading cache.json at the start
 # Here it is written back to file
