@@ -76,32 +76,6 @@ summoner = Summoner(name=player_name, region=player_region)
 match_history = summoner.match_history(queues={cass.Queue.ranked_solo_fives})
 matchID_list= make_matchID_list(match_history)
 
-# =============================================================================
-# Current implementation is as follows:
-# 1. Pull the list of match ids
-# 2. Store the most recent matchID (probably index 0) to be cached later
-# 3. for matchID in matchID_list:
-#     3.1. Check IF the current matchID in list is equal to one in cache
-#         3.1.1. True, break from loop and discard current and further matchIDs
-#         3.1.2. False, append to list of new matchIDs that need to be tracked
-# 4. Check to see IF any new matchIDs were actually pulled
-#     4.1. True, set the cache last matchID to be the new last matchID
-#     4.2. False, don't. (Maybe we can skip the rest of the calculation code and just reprint cache stuff if false)
-# =============================================================================
-new_last_matchID = matchID_list[0]
-new_matchIDs = []
-
-for matchID in matchID_list:
-    if matchID == cache['last-matchID']:
-        break
-    else:
-        new_matchIDs.append(matchID)
-
-if len(new_matchIDs) == 0:
-    pass
-else:
-    cache['last-matchID'] = new_last_matchID
-
 #%% CREATING FILE TO SAVE PLAYER'S STATS
 data_fileName= player_name + "_matchStats.json"
 
@@ -153,11 +127,3 @@ for key, value in new_matchStats.items():
 with open(data_fileName, 'w') as output_data_file: 
     json.dump(past_stats, output_data_file) 
     output_data_file.close()        
-
-#%% WRITE TO CACHE
-# Throughout the script we should be writing to the cache dictionary that was created by reading cache.json at the start
-# Here it is written back to file
-# Done at the end to prevent dirty data from being written midway in the event of a crash
-with open('cache.json', 'w') as outfile:
-    json.dump(cache, outfile)
-    outfile.close()
