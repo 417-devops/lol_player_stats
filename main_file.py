@@ -33,33 +33,74 @@ def getStats(match):
     # https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/
     p = match.participants[summoner]
     # End of game stats
-    endGame= p.stats
+    endGame = p.stats
     # #maybe some kind of vision score weighted by minute? (should be exponential w/ gametime)
     # Timeline stats; see page 43 of docs
     # currently only looking at 0-10 min mark
-    timeData= p.timeline
-    cs_per_min = timeData.creeps_per_min_deltas['0-10']
-    # not really sure how to handle no attribute errors
+    timeData = p.timeline
+
     try:
-        csd_per_min= timeData.cs_diff_per_min_deltas['0-10']
+        cs_per_min = timeData.creeps_per_min_deltas['0-10']
     except:
-        pass
-    dmgDiff_per_min= timeData.damage_taken_diff_per_min_deltas['0-10']
-    xpDiff_per_min= timeData.xp_diff_per_min_deltas['0-10']
+        cs_per_min = None
     
-    match_stats= {
-        "MatchID": match.id,
-        "gold_earned": endGame.gold_earned,
-        "gold_spent": endGame.gold_spent,
-        "total_damage": endGame.total_damage_dealt,
-        "total_damage_champs": endGame.total_damage_dealt_to_champions,
-        "vision_score": endGame.vision_score,
-        "Win": endGame.win,
-        "cs_per_min": cs_per_min,
-        "csd_per_min": csd_per_min,
-        "dmgDiff_per_min": dmgDiff_per_min,
-        "xpDiff_per_min": xpDiff_per_min
-        }
+    try:
+        csd_per_min = timeData.cs_diff_per_min_deltas['0-10']
+    except:
+        csd_per_min = None
+
+    try:
+        dmgDiff_per_min = timeData.damage_taken_diff_per_min_deltas['0-10']
+    except:
+        dmgDiff_per_min = None
+
+    try:
+        xpDiff_per_min= timeData.xp_diff_per_min_deltas['0-10']
+    except:
+        xpDiff_per_min = None
+    
+    match_stats= {}
+    
+    try:
+        match_stats['MatchID'] = match.id
+    except:
+        match_stats['MatchID'] = None
+    
+    try:
+        match_stats['gold_earned'] = endGame.gold_earned
+    except:
+        match_stats['gold_earned'] = None
+
+    try:
+        match_stats['gold_spent'] = endGame.gold_spent
+    except:
+        match_stats['gold_spent'] = None
+
+    try:
+        match_stats['total_damage'] = endGame.total_damage_dealt
+    except:
+        match_stats['total_damage'] = None
+
+    try:
+        match_stats['total_damage_champs'] = endGame.total_damage_dealt_to_champions
+    except:
+        match_stats['total_damage_champs'] = None
+    
+    try:
+        match_stats['vision_score'] = endGame.vision_score
+    except:
+        match_stats['vision_score'] = None
+    
+    try:
+        match_stats['Win'] = endGame.win
+    except:
+        match_stats['Win'] = None
+    
+    match_stats['cs_per_min'] = cs_per_min
+    match_stats['csd_per_min'] = csd_per_min
+    match_stats['dmgDiff_per_min'] = dmgDiff_per_min
+    match_stats['xpDiff_per_min'] = xpDiff_per_min
+    
     
     return match_stats
     
