@@ -7,6 +7,7 @@ Created on Tue Jul  7 16:19:50 2020
 
 import cassiopeia as cass
 import json
+from datetime import timedelta
 from pathlib import Path
 from cassiopeia import Summoner, Match
 from cassiopeia.data import Season, Queue
@@ -38,7 +39,11 @@ def getStats(match):
     # currently only looking at 0-10 min mark
     timeData= p.timeline
     cs_per_min = timeData.creeps_per_min_deltas['0-10']
-    csd_per_min= timeData.cs_diff_per_min_deltas['0-10']
+    # not really sure how to handle no attribute errors
+    try:
+        csd_per_min= timeData.cs_diff_per_min_deltas['0-10']
+    except:
+        pass
     dmgDiff_per_min= timeData.damage_taken_diff_per_min_deltas['0-10']
     xpDiff_per_min= timeData.xp_diff_per_min_deltas['0-10']
     
@@ -80,7 +85,7 @@ matchID_list= make_matchID_list(match_history)
 data_fileName= player_name + "_matchStats.json"
 
 new_matchStats= {
-    "matchIDs": [],
+    "MatchID": [None],
     "gold_earned": [],
     "gold_spent": [],
     "total_damage": [],
@@ -105,14 +110,17 @@ with open(data_fileName, 'r') as openfile:
     openfile.close()
     
 #%% BEGIN ANALYZING MATCHES IN MATCH HISTORY
-last_analyzed_matchID= past_stats["MatchIDs"][0]
+last_analyzed_matchID= past_stats["MatchID"][0]
 
 #need to prepend stats so that the newest match stats are first in the list!
 for match in match_history:
     if match.id == last_analyzed_matchID:
         break
+    elif match.duration < timedelta(minutes=3, seconds= 15):
+        # skip remakes
+        pass
     else:
-        #grab the stats from each match
+        # grab the stats from each match
         match_stats= getStats(match)
         for key, value in match_stats.items():  
             #append the match stats to the new_matchStats dictionary
