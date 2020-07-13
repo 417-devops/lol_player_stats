@@ -23,20 +23,7 @@ def make_matchID_list(match_history):
         matchID_list.append(item.id)
     return matchID_list
 
-def init_playerData(data_fileName):
-    matchStats= {
-        "matchIDs": [],
-        "gold_earned": [],
-        "gold_spent": [],
-        "total_damage": [],
-        "total_damage_champs": [],
-        "vision_score": [],
-        "Win": [],
-        "cs_per_min": [],
-        "csd_per_min": [],
-        "dmgDiff_per_min": [],
-        "xpDiff_per_min": []
-        }
+def init_playerData(data_fileName, matchStats):
     with open(data_fileName, "w") as outfile: 
         json.dump(matchStats, outfile)
         outfile.close()
@@ -56,6 +43,7 @@ def getStats(match):
     xpDiff_per_min= timeData.xp_diff_per_min_deltas['0-10']
     
     match_stats= {
+        "MatchID": match.id,
         "gold_earned": endGame.gold_earned,
         "gold_spent": endGame.gold_spent,
         "total_damage": endGame.total_damage_dealt,
@@ -67,6 +55,7 @@ def getStats(match):
         "dmgDiff_per_min": dmgDiff_per_min,
         "xpDiff_per_min": xpDiff_per_min
         }
+    
     return match_stats
     
 #%% INITIALIZATION
@@ -116,41 +105,55 @@ else:
 #%% CREATING FILE TO SAVE PLAYER'S STATS
 data_fileName= player_name + "_matchStats.json"
 
+new_matchStats= {
+    "matchIDs": [],
+    "gold_earned": [],
+    "gold_spent": [],
+    "total_damage": [],
+    "total_damage_champs": [],
+    "vision_score": [],
+    "Win": [],
+    "cs_per_min": [],
+    "csd_per_min": [],
+    "dmgDiff_per_min": [],
+    "xpDiff_per_min": []
+    }
+    
 checkfile=Path("./"+data_fileName)
 if not checkfile.is_file():
     print("\nPlayer stats file does not exist.")
     print("Creating initial stats file...")
-    init_playerData(data_fileName)
-     
+    init_playerData(data_fileName, new_matchStats)
+
+# old match stats     
 with open(data_fileName, 'r') as openfile: 
     past_stats = json.load(openfile) 
     openfile.close()
     
-# =============================================================================
-# #%% BEGIN ANALYZING MATCHES IN MATCH HISTORY
-# with open("cache.json", 'r') as openfile: 
-#     json_object = json.load(openfile) 
-#     openfile.close()
-# last_analyzed_matchID= json_object["last-matchID"]
-# 
-# #need to prepend stats so that the newest match stats are first in the list!
-# for match in match_history:
-#     if match.id == last_analyzed_matchID:
-#         #reaching the last analyzed match breaks the loop
-#         break
-#     else:
-#         #grab the stats from each match
-#         past_stats["matchIDs"].append(match.id)
-#         match_stats= getStats(match)
-#         for key, value in match_stats.items():    
-#             past_stats[key].append(value)
-#             
-# #%% APPEND THE STATS FROM THE NEW MATCHES TO FILE
-# with open(data_fileName, 'w') as output_data_file: 
-#     json.dump(past_stats, output_data_file) 
-#     output_data_file.close()        
-# 
-# =============================================================================
+#%% BEGIN ANALYZING MATCHES IN MATCH HISTORY
+last_analyzed_matchID= past_stats["MatchIDs"][0]
+
+#need to prepend stats so that the newest match stats are first in the list!
+for match in match_history:
+    if match.id == last_analyzed_matchID:
+        break
+    else:
+        #grab the stats from each match
+        match_stats= getStats(match)
+        for key, value in match_stats.items():  
+            #append the match stats to the new_matchStats dictionary
+            new_matchStats[key].append(value)
+            
+#%% APPEND THE STATS FROM THE NEW MATCHES TO FILE
+for key, value in new_matchStats.items():
+    # combined=itertools.chain(new_stats[key], saved_stats[key])
+    combined= new_matchStats[key]+past_stats[key]
+    past_stats[key]= combined
+    
+with open(data_fileName, 'w') as output_data_file: 
+    json.dump(past_stats, output_data_file) 
+    output_data_file.close()        
+
 #%% WRITE TO CACHE
 # Throughout the script we should be writing to the cache dictionary that was created by reading cache.json at the start
 # Here it is written back to file
