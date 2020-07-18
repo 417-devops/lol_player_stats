@@ -19,19 +19,24 @@ def calc_average(data):
 
 def make_plot(x, data, ylabel, title):
     fig, ax = plt.subplots()
-    plt.plot(x, data, 'o', ls='-', ms=4, markevery=1)
-    plt.xticks(np.arange(min(x), max(x)+1, 2))
+    marker_style = dict(color='tab:blue', marker='o', markersize=4)
+    plt.plot(x, data, linestyle='--', color='tab:blue')
+    plt.plot(x, data, linestyle='', marker='o', fillstyle='none', color='black')
     
+    plt.xticks(np.arange(min(x), max(x)+1, 2))
+    # ax.set_ylim(top=1.1*max(list(filter((None).__ne__, data))))
     ax.set_ylabel(ylabel)
     ax.set_xlabel('Game, 0= most recent')
     ax.set_title(title)
     
     average= round(calc_average(data),2)
     note= 'Average over '+ str(num_matches)+' games: '+str(average)
-    plt.text(-0.5, 0.98*max(list(filter((None).__ne__, data))), note, fontsize=10, bbox=dict(facecolor='green', alpha=0.3))
-    fig.show()
+    plt.text(-0.5, 0.98*max(list(filter((None).__ne__, data))), note, fontsize=10, bbox=dict(facecolor='green', alpha=0.75))
+    # fig.show() #spyder IDE doesn't need this
     
 #%% INITIALIZATION
+start_time = time.time()
+
 cass.set_riot_api_key(getAPI_key()) #or replace with your own api key
 cass.set_default_region("NA") #or replace with another region
 
@@ -53,16 +58,32 @@ with open(data_fileName, 'r') as openfile:
 num_matches= 20
 x= np.linspace(0,num_matches,num_matches)
 
-#%% Damage per gold
+#%% GRAPH: Damage per gold
 dmg_per_gold= np.divide(past_stats['total_damage'][0:num_matches],past_stats['gold_spent'][0:num_matches])
 ylabel= 'Damage/Gold'
 title= player_name+': Damage per gold spent'
 make_plot(x, dmg_per_gold, ylabel, title)
 
-#%% CS per min
+#%% GRAPH: CS per min
 cs_per_min= past_stats['cs_per_min'][0:num_matches]
 ylabel='CS/min'
 title= player_name+': CS per minute'
 
 make_plot(x, cs_per_min, ylabel, title)
-#%% CSD at 10min
+
+#%% GRAPH: CSD at 10min
+csd_10min= past_stats['csd_per_min'][0:num_matches]
+ylabel='CSD'
+title= player_name+': CSD at 10min'
+
+make_plot(x, csd_10min, ylabel, title)
+
+#%% GRAPH: Vision score
+vision_score= past_stats['vision_score'][0:num_matches]
+ylabel='Vision Score'
+title= player_name+': Vision Score'
+
+make_plot(x, vision_score, ylabel, title)
+
+#%% RUNTIME CALCULATION
+print("\n--- %s seconds ---" % (time.time() - start_time))

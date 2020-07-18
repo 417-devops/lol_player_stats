@@ -11,6 +11,7 @@ from datetime import timedelta
 from pathlib import Path
 from cassiopeia import Summoner, Match
 from cassiopeia.data import Season, Queue
+import time
 
 def getAPI_key():
     #reads the API key from local file
@@ -170,6 +171,7 @@ def getPlayerData(summoner, player_name, player_region):
         output_data_file.close()
 
 if __name__ == '__main__':
+    start_time = time.time()
     #%% INITIALIZATION
     cass.set_riot_api_key(getAPI_key()) #or replace with your own api key
     cass.set_default_region("NA") #or replace with another region
@@ -185,3 +187,4 @@ if __name__ == '__main__':
     
     #%% GET THE PLAYER DATA
     getPlayerData(summoner, player_name, player_region)
+    print("--- %s seconds ---" % (time.time() - start_time))
