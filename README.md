@@ -19,6 +19,6 @@ This tool is designed to pull data from a given player's matches, for later anal
 	  2. Saving the data this way allows for caching and easy future use
 
 # Questions?
-Feel free to contact either of the authors, through information posted on their GitHub profile!
+Feel free to contact either of the authors through the information posted on their GitHub profile!
 - Karl Roush: [@karoush](https://github.com/karoush)
 - Elijah Smith: [@ElijahKSmith](https://github.com/ElijahKSmith)
