@@ -175,7 +175,8 @@ if __name__ == '__main__':
     #%% INITIALIZATION
     cass.set_riot_api_key(getAPI_key()) #or replace with your own api key
     cass.set_default_region("NA") #or replace with another region
-
+    
+    #cache is not actually used
     with open('cache.json', 'r') as cache_file:
         cache = json.load(cache_file)
         cache_file.close()
