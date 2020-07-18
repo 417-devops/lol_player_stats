@@ -7,12 +7,12 @@ This tool is designed to pull data from a given player's matches, for later anal
 ```data_analysis.py``` calculates various statistics over a specified number of matches and displays them in a graphical format.
 
 # How to use
-1. **Setup Python enviroment**
-    1. Use the ```environment.yml``` file
-    2. Alternatively use pip to install dependancies (```pip install -r requirements.txt```)
+1. **Setup Python environment**
+    1. Use the ```environment``` file
+    2. Alternatively use pip to install dependencies (```pip install -r requirements.txt```)
 1. **Retrieve the player data**
     1. Running ```data_analysis.py``` should automatically pull data for the specified player
-    2. If not, run ```fetch_rawData.py``` seperately first
+    2. If not, run ```fetch_rawData.py``` separately first
 2. **Analyze the data**
     1. ```data_analysis.py``` already does some preliminary analysis
 	  2. Feel free to add whatever calculated statistics and methods you want here
