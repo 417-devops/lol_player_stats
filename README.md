@@ -15,7 +15,7 @@ This tool is designed to pull data from a given player's matches, for later anal
 	  2. Feel free to add whatever calculated statistics and methods you want here
 	  3. If you want to pull additional match statistics beyond what is already recorded, refer to Cassiopeia [documentation](https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/) to modify the ```fetch_rawData.py``` file.
 3. **Using data in the future**
-    1. All of the requested player data is stored in a .JSON file with the format: *player_name + "_matchStats.json"*
+    1. All of the requested player data is stored in a .JSON file with the format: *"playerName_matchStats.json"*
 	  2. Saving the data this way allows for caching and easy future use
 
 # Questions?
