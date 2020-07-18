@@ -41,7 +41,7 @@ cass.set_riot_api_key(getAPI_key()) #or replace with your own api key
 cass.set_default_region("NA") #or replace with another region
 
 #%% SETTING THE PLAYER TO BE ANALYZED
-player_name= "RebirthNA"
+player_name= "C9 Zven"
 player_region= "NA"
 summoner = Summoner(name=player_name, region=player_region)
     

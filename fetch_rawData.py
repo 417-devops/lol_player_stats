@@ -181,7 +181,7 @@ if __name__ == '__main__':
         cache_file.close()
 
     #%% SETTING THE PLAYER TO BE ANALYZED
-    player_name= "RebirthNA"
+    player_name= "C9 Zven"
     player_region= "NA"
     summoner = Summoner(name=player_name, region=player_region)
     
