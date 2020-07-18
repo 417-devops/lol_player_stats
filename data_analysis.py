@@ -65,4 +65,4 @@ ylabel='CS/min'
 title= player_name+': CS per minute'
 
 make_plot(x, cs_per_min, ylabel, title)
-#%%
+#%% CSD at 10min

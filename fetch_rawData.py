@@ -139,15 +139,6 @@ def getPlayerData(summoner, player_name, player_region):
         openfile.close()
         
     ### BEGIN ANALYZING MATCHES IN MATCH HISTORY
-    #null is the default first entry so this needs to be fixed
-# =============================================================================
-#     if len(past_stats["MatchID"])==1:
-#         last_analyzed_matchID= past_stats["MatchID"][0]
-#     elif len(past_stats["MatchID"])==0:
-#         last_analyzed_matchID= None
-#     else:
-#         last_analyzed_matchID= past_stats["MatchID"][1]
-# =============================================================================
     try:
         last_analyzed_matchID= past_stats["MatchID"][0]
     except:
@@ -173,11 +164,6 @@ def getPlayerData(summoner, player_name, player_region):
         # combined=itertools.chain(new_stats[key], saved_stats[key])
         combined= new_matchStats[key]+past_stats[key]
         past_stats[key]= combined
-        
-# =============================================================================
-#     for key, value in past_stats.items():
-#         del value[0]
-# =============================================================================
         
     with open(data_fileName, 'w') as output_data_file: 
         json.dump(past_stats, output_data_file) 
