@@ -104,7 +104,7 @@ def getStats(match):
     
     return match_stats
 
-def getPlayerData(player_name, player_region):
+def getPlayerData(summoner, player_name, player_region):
     ### GET THE MATCH HISTORY
     # for soloQ
     match_history = summoner.match_history(queues={cass.Queue.ranked_solo_fives})
@@ -198,4 +198,4 @@ if __name__ == '__main__':
     summoner = Summoner(name=player_name, region=player_region)
     
     #%% GET THE PLAYER DATA
-    getPlayerData(player_name, player_region)
+    getPlayerData(summoner, player_name, player_region)
