@@ -32,7 +32,7 @@ def make_plot(x, data, ylabel, title):
     average= round(calc_average(data),2)
     note= 'Average over '+ str(num_matches)+' games: '+str(average)
     plt.text(-0.5, 0.98*max(list(filter((None).__ne__, data))), note, fontsize=10, bbox=dict(facecolor='green', alpha=0.75))
-    # fig.show() #spyder IDE doesn't need this
+    plt.savefig(title+".png")
     
 #%% INITIALIZATION
 start_time = time.time()
