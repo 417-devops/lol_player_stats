@@ -18,6 +18,7 @@ def calc_average(data):
     return mean(clean_data)
 
 def make_plot(x, data, ylabel, title):
+    file_title = title.replace(": ", "_")
     fig, ax = plt.subplots()
     marker_style = dict(color='tab:blue', marker='o', markersize=4)
     plt.plot(x, data, linestyle='--', color='tab:blue')
@@ -32,7 +33,7 @@ def make_plot(x, data, ylabel, title):
     average= round(calc_average(data),2)
     note= 'Average over '+ str(num_matches)+' games: '+str(average)
     plt.text(-0.5, 0.98*max(list(filter((None).__ne__, data))), note, fontsize=10, bbox=dict(facecolor='green', alpha=0.75))
-    plt.savefig(title+".png")
+    plt.savefig(file_title+".png")
     
 #%% INITIALIZATION
 start_time = time.time()
