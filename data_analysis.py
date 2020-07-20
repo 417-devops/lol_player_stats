@@ -2,7 +2,7 @@
 """
 Created on Sat Jul 18 15:38:57 2020
 
-@author: Karl Roush
+@author: Karl Roush and Elijah Smith
 """
 
 # For getting the raw data

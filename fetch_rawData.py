@@ -30,7 +30,7 @@ def init_playerData(data_fileName, matchStats):
         json.dump(matchStats, outfile)
         outfile.close()
         
-def getStats(match):
+def getStats(match, summoner):
     # https://readthedocs.org/projects/cassiopeia/downloads/pdf/latest/
     p = match.participants[summoner]
     # End of game stats
@@ -155,7 +155,7 @@ def getPlayerData(summoner, player_name, player_region):
             pass
         else:
             # grab the stats from each match
-            match_stats= getStats(match)
+            match_stats= getStats(match, summoner)
             for key, value in match_stats.items():  
                 #append the match stats to the new_matchStats dictionary
                 new_matchStats[key].append(value)
