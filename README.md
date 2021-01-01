@@ -23,5 +23,5 @@ This tool is designed to pull data from a given player's matches, for later anal
 
 # Questions?
 Feel free to contact either of the authors through the information posted on their GitHub profile!
-- Karl Roush: [@karoush](https://github.com/karoush)
+- Karl Roush: [@karlroush](https://github.com/karlroush)
 - Elijah Smith: [@ElijahKSmith](https://github.com/ElijahKSmith)
