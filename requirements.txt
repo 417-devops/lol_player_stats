@@ -8,7 +8,7 @@ autopep8 @ file:///tmp/build/80754af9/autopep8_1592412889138/work
 Babel==2.8.0
 backcall==0.2.0
 bcrypt==3.1.7
-bleach==3.1.5
+bleach==3.3.0
 brotlipy==0.7.0
 cassiopeia==4.0.13
 certifi==2020.6.20
