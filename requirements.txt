@@ -70,7 +70,7 @@ pycodestyle==2.6.0
 pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
 pydocstyle @ file:///tmp/build/80754af9/pydocstyle_1592848020240/work
 pyflakes==2.2.0
-Pygments==2.6.1
+Pygments==2.7.4
 pylint==2.4.4
 PyNaCl @ file:///C:/ci/pynacl_1595009241355/work
 pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
