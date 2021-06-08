@@ -62,7 +62,7 @@ parso==0.7.0
 pathtools==0.1.2
 pexpect @ file:///C:/ci/pexpect_1594383465186/work
 pickleshare @ file:///C:/ci/pickleshare_1594374056827/work
-Pillow==8.1.1
+Pillow==8.2.0
 pluggy==0.13.1
 prompt-toolkit==3.0.5
 psutil==5.7.0
