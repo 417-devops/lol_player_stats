@@ -109,7 +109,7 @@ toml @ file:///tmp/build/80754af9/toml_1592853716807/work
 tornado==6.0.4
 traitlets==4.3.3
 ujson==1.35
-urllib3==1.25.9
+urllib3==1.26.5
 watchdog @ file:///C:/ci/watchdog_1593446515400/work
 wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
 webencodings==0.5.1
