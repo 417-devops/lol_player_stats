@@ -53,7 +53,7 @@ mkl-service==2.3.0
 nbconvert @ file:///C:/ci/nbconvert_1594372737468/work
 nbformat==5.0.7
 networkx==2.4
-numpy==1.18.5
+numpy==1.21.0
 numpydoc @ file:///tmp/build/80754af9/numpydoc_1594166760263/work
 packaging==20.4
 pandocfilters==1.4.2
