@@ -6,6 +6,8 @@ This tool is designed to pull data from a given player's matches, for later anal
 
 ```data_analysis.py``` calculates various statistics over a specified number of matches and displays them in a graphical format.
 
+*As of Sept. 2021, the match-v4 endpoint has been deprecated & Cass has a ton of bugs when handling v4 requests. Use this code at your own peril.*
+
 # How to use
 1. **Setup Python environment**
     1. Use the ```environment``` file
